@@ -2,30 +2,44 @@
 
 Tether is built on the principle of **Zero-Discretionary Control**. This ensures that even if our infrastructure is compromised, your funds remain protected by hardware-level isolation.
 
-## The Sequence of a Transaction
+## How the JIT Webhook Connects (The "Last Mile")
 
-The following diagram shows the end-to-end flow of a transaction, from the agent's attempt to pay to the final JIT settlement.
+A common question is: **How does a merchant's checkout page (e.g., Farfetch using Stripe) talk to Tether's TEE?**
+
+Tether utilizes the standard **ISO 8583** card network authorization flow. We don't need a custom integration with every merchant because we sit at the **Issuer Level**.
+
+### The Network Flow:
+1.  **Checkout:** The agent enters the Tether Virtual Card details into the merchant's payment field (Stripe, Adyen, Braintree, etc.).
+2.  **Acquirer Processing:** The merchant's payment processor (e.g., Stripe) sends the transaction to the **Card Network** (Visa/Mastercard).
+3.  **Real-Time Authorization (RTA):** The Card Network identifies that the card was issued by Tether's partner (e.g., Lithic or Stripe Issuing) and routes the request to them.
+4.  **The JIT Webhook:** Tether's Issuer Partner sends a synchronous **Real-Time Authorization Webhook** (`issuing_authorization.request`) to Tether's TEE.
+5.  **TEE Validation:**
+    *   The TEE receives the merchant's metadata (Name, Category, Amount).
+    *   The TEE cross-references this with the **Agent's Task Logs**.
+    *   **The Decision:** If the intent is verified, the TEE responds with `{"approve": true}`.
+6.  **Success:** The Card Network approves the transaction at the merchant's terminal in milliseconds.
 
 ```mermaid
 sequenceDiagram
-    participant A as AI Agent
-    participant M as Merchant
-    participant T as Tether TEE (Enclave)
-    participant V as PCI-Compliant Vault
-    participant U as User Treasury
+    participant A as Agent
+    participant M as Merchant (Stripe Checkout)
+    participant N as Card Network (Visa/MC)
+    participant I as Issuer Partner (Lithic/Stripe)
+    participant T as Tether TEE
     
-    A->>M: 1. Attempt Payment (Tether Virtual Card)
-    M->>T: 2. Auth Request (Webhook)
-    T->>T: 3. Fetch Agent Task Logs
-    T->>T: 4. Validate Intent vs. Policy
-    Note over T: If verified, authorize JIT pull
-    T->>V: 5. Request Signed Transfer
-    V->>U: 6. JIT Fund Pull (Exact Amount)
-    U-->>V: 7. Success
-    V-->>T: 8. Virtual Card Funded
-    T-->>M: 9. Transaction Approved
-    Note over M: Payment Complete
+    A->>M: 1. Submit Card
+    M->>N: 2. Process Transaction
+    N->>I: 3. Authorization Request
+    I->>T: 4. Real-Time Webhook (RTA)
+    Note over T: TEE checks Agent Intent & Log
+    T-->>I: 5. Approve: true (JIT Fund)
+    I-->>N: 6. Approved
+    N-->>M: 7. Success
+    M-->>A: 8. Order Confirmed
 ```
+
+### Why this is Secure:
+The merchant (Farfetch) **never knows Tether exists**. They just see a standard Visa/Mastercard. The "Trust" happens between the **Issuer (Tether)** and the **Card Network**. This ensures Tether is immediately compatible with 150M+ merchants worldwide.
 
 ## Key Components
 
