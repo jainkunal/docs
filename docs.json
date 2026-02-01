@@ -27,14 +27,22 @@
     {
       "group": "Essentials",
       "pages": [
-        "essentials/architecture",
-        "essentials/examples",
-        "essentials/navigation",
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/reusable-snippets",
-        "essentials/settings"
+        "essentials/architecture"
+      ]
+    },
+    {
+      "group": "Use Case Examples",
+      "pages": [
+        "examples/research-assistant",
+        "examples/corporate-travel",
+        "examples/devops-bot",
+        "examples/personal-stylist"
+      ]
+    },
+    {
+      "group": "Development",
+      "pages": [
+        "development"
       ]
     },
     {
@@ -45,14 +53,6 @@
         "api-reference/endpoint/create",
         "api-reference/endpoint/delete",
         "api-reference/endpoint/webhook"
-      ]
-    },
-    {
-      "group": "AI Tools",
-      "pages": [
-        "ai-tools/cursor",
-        "ai-tools/windsurf",
-        "ai-tools/claude-code"
       ]
     }
   ],

@@ -1,0 +1,46 @@
+# The DevOps Automation Bot
+
+## The Problem
+DevOps bots need to pay for burst infrastructure (AWS Lambda, Vercel bandwidth). The risk isn't just malicious use; it's **infinite loops**. A bug in an auto-scaling script could trigger thousands of micro-transactions, draining an account in minutes before a human notices.
+
+## Implementation
+Tether provides **Real-Time Loop Protection** at the card network level.
+
+```typescript
+const devOpsCard = await tether.issueCard({
+  name: 'Infrastructure Bursts',
+  policy: {
+    monthlyLimit: 5000,
+    categories: ['Cloud Computing'],
+    // Specialized agentic guardrails
+    protections: {
+      antiLoop: {
+        maxFrequency: 5, // max transactions
+        perPeriod: 60,   // seconds
+        action: 'FREEZE_CARD'
+      }
+    }
+  }
+});
+```
+
+## Transaction Flow
+```mermaid
+sequenceDiagram
+    participant B as DevOps Bot
+    participant W as AWS (Merchant)
+    participant T as Tether TEE
+    participant U as User Bank
+
+    Note over B: Bot enters infinite loop
+    B->W: 1. Request Scaling $0.50
+    W->T: 2. Auth Request (1/5) -> APPROVED
+    B->W: 3. Request Scaling $0.50
+    W->T: 4. Auth Request (6/5)
+    Note over T: Anti-Loop Triggered!
+    T-->>W: 5. REJECTED & CARD FROZEN
+    T-->>U: 6. Alert: "Potential loop detected on AWS"
+```
+
+## Conclusion
+The user achieved **Financial Safety**. By shifting loop detection from "after-the-fact" cloud bills to "real-time" authorization, Tether prevents catastrophic bugs from becoming bank-breaking events.
