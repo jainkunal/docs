@@ -1,63 +1,94 @@
 {
-  "name": "Tether Docs",
+  "$schema": "https://mintlify.com/docs.schema.json",
+  "name": "Tether",
+  "theme": "mint",
   "logo": {
     "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "dark": "/logo/dark.svg",
+    "href": "https://tether.mitchi.xyz"
   },
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0F0F0F",
     "light": "#333333",
-    "dark": "#000000"
+    "dark": "#000000",
+    "anchors": {
+      "from": "#0F0F0F",
+      "to": "#333333"
+    }
   },
   "topbarLinks": [
     {
-      "name": "Support",
+      "name": "Contact Support",
       "url": "mailto:hi@mitchi.xyz"
     }
   ],
-  "content": [
-    {
-      "group": "Introduction",
-      "pages": [
-        "index",
-        "quickstart"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/architecture"
-      ]
-    },
-    {
-      "group": "Use Case Examples",
-      "pages": [
-        "examples/research-assistant",
-        "examples/corporate-travel",
-        "examples/devops-bot",
-        "examples/personal-stylist"
-      ]
-    },
-    {
-      "group": "Development",
-      "pages": [
-        "development"
-      ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "api-reference/introduction",
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete",
-        "api-reference/endpoint/webhook"
-      ]
-    }
-  ],
+  "topbarCtaButton": {
+    "name": "Issue a Card",
+    "url": "https://app.youform.com/forms/rzsy0oix"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "essentials/architecture"
+            ]
+          },
+          {
+            "group": "Use Case Examples",
+            "pages": [
+              "examples/research-assistant",
+              "examples/corporate-travel",
+              "examples/devops-bot",
+              "examples/personal-stylist"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/delete"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "api-reference/endpoint/webhook"
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "footerSocials": {
     "x": "https://x.com/mitchixyz",
     "github": "https://github.com/jainkunal/tether-mitchi-xyz"
+  },
+  "feedback": {
+    "suggestEdit": true,
+    "raiseIssue": true
   }
 }
