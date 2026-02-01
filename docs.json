@@ -1,5 +1,5 @@
 {
-  "$schema": "https://mintlify.com/docs.schema.json",
+  "$schema": "https://mintlify.com/docs.json",
   "name": "Tether",
   "theme": "mint",
   "logo": {
@@ -11,11 +11,7 @@
   "colors": {
     "primary": "#0F0F0F",
     "light": "#333333",
-    "dark": "#000000",
-    "anchors": {
-      "from": "#0F0F0F",
-      "to": "#333333"
-    }
+    "dark": "#000000"
   },
   "topbarLinks": [
     {
