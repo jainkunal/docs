@@ -1,0 +1,47 @@
+# Usage Examples
+
+Explore these real-world scenarios to see how Tether's intent-aware policies protect your treasury while enabling full agent autonomy.
+
+---
+
+## 1. The Research Assistant
+**Scenario:** A research agent is tasked with gathering academic papers and managing data processing credits.
+
+*   **Policy:** 
+    *   **Task IDs:** `research-proj-alpha`
+    *   **Allowed Categories:** `Education`, `Data Processing`
+    *   **Intent Rule:** Transaction must be cited in the agent's current scratchpad as a "data requirement."
+*   **Result:** The agent pays for **OpenAI API** and **JSTOR** access autonomously. If the agent tries to buy a "Research for Dummies" book on Amazon, the JIT funding is denied because the intent doesn't match the "Data" category.
+
+---
+
+## 2. The Corporate Travel Agent
+**Scenario:** An agent manages all flight and hotel bookings for a team based on Slack requests.
+
+*   **Policy:** 
+    *   **Max Spend:** $1,500 per transaction
+    *   **Requirement:** Agent must have a confirmed "Travel Request" message in its context history.
+    *   **Logic Gate:** If amount > $500, the TEE verifies that a "Human Approval" flag was set in the task log.
+*   **Result:** The agent books a flight on **Delta**. The TEE validates the specific Slack message ID from the log before authorizing the JIT pull from the corporate account.
+
+---
+
+## 3. The DevOps Automation Bot
+**Scenario:** A bot is responsible for scaling infrastructure and paying for one-off cloud services.
+
+*   **Policy:**
+    *   **Merchant Whitelist:** `AWS`, `GCP`, `Vercel`
+    *   **Budget:** $200 daily rolling limit.
+    *   **Loop Protection:** No more than 3 transactions at the same merchant within 60 seconds.
+*   **Result:** The bot pays for extra **AWS Lambda** usage during a traffic spike. If the bot's code bugs out and tries to re-purchase the same subscription 50 times in a minute, Tether's loop protection freezes the card instantly.
+
+---
+
+## 4. The Personal Shopping Stylist
+**Scenario:** A stylist agent buys outfits based on a user's calendar events (e.g., "Wedding on Saturday").
+
+*   **Policy:**
+    *   **Allowed Merchants:** `Zalando`, `Farfetch`, `Nordstrom`
+    *   **Constraint:** Transaction amount must be <= the "Budget" value extracted from the user's initial prompt.
+    *   **Manual Override:** If the agent finds a "perfect match" over budget, it can request a one-time policy update via push notification.
+*   **Result:** The agent buys a dress for $150. When it tries to buy a $600 dress, it triggers the **Human-in-the-Loop** Oracle, asking the user for a quick "Approve" before the TEE authorizes the JIT pull.
